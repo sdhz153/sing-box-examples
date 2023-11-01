@@ -26,6 +26,7 @@
             {
                 "tag": "dns_resolver",
                 "address": "1.1.1.1",
+                "strategy": "ipv4_only",
                 "detour": "direct"
             }
         ],
@@ -42,12 +43,6 @@
                 ],
                 "server": "dns_block",
                 "disable_cache": true
-            },
-            {
-                "geosite": [
-                    "private"
-                ],
-                "server": "dns_direct"
             }
         ]
     },
