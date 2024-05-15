@@ -1,37 +1,66 @@
-# [sing-box](https://github.com/SagerNet/sing-box) 安装指南
+## **配置介绍：** 
+
+### 基于 TCP 的代理协议
+
+| 协议(组合) | [Multiplex](https://sing-box.sagernet.org/configuration/shared/multiplex/) | [TCP Brutal](https://sing-box.sagernet.org/configuration/shared/tcp-brutal/) | MPTCP |
+| :--- | :---: | :---: | :---: |
+| [**Shadowsocks**](Shadowsocks) | 支持 | :heavy_check_mark: | :heavy_check_mark: |
+| [**Trojan**](Trojan) | 支持 | :heavy_check_mark: | :heavy_check_mark: |
+| [**VLESS-Vision-TLS**](VLESS-Vision-TLS) | 不支持 **1** | :x: **1** | :heavy_check_mark: |
+| [**VLESS-Vision-REALITY**](VLESS-Vision-REALITY) | 不支持 **1** | :x: **1** | :heavy_check_mark: |
+| [**VLESS-gRPC-REALITY**](VLESS-gRPC-REALITY) | 自带 | :x: | :heavy_check_mark: |
+| [**VLESS-HTTP2-REALITY**](VLESS-HTTP2-REALITY) | 自带 | :x: | :heavy_check_mark: |
+| [**VLESS-gRPC-TLS**](VLESS-gRPC-TLS) | 自带 | :x: | :heavy_check_mark: |
+| [**VMess**](VMess) | 支持 | :heavy_check_mark: | :heavy_check_mark: |
+| [**VMess-WebSocket**](VMess-WebSocket) | 支持 | :heavy_check_mark: | :heavy_check_mark: |
+| [**VMess-WebSocket-TLS**](VMess-WebSocket-TLS) | 支持 | :heavy_check_mark: | :heavy_check_mark: |
+| [**VMess-HTTPUpgrade-TLS**](VMess-HTTPUpgrade-TLS) | 支持 | :heavy_check_mark: | :heavy_check_mark: |
+
+**1：** `"flow": ""` 留空，或不写 `"flow": ""` 时支持
+
+[**TCP Brutal 使用指南**](TCP_Brutal#readme)
+
+> TCP Brutal 配置需在[客户端](TCP_Brutal/config_client.json#L24-L35)，[服务端](TCP_Brutal/config_server.json#L17-L25)同时启用
+
+### 基于 UDP 的代理协议
+
+| 协议 |
+| :--- |
+| [**Hysteria**](Hysteria) |
+| [**Hysteria2**](Hysteria2) |
+| [**TUIC**](TUIC) |
 
 ## 一键脚本 [sing-box-install](https://github.com/chise0713/sing-box-install) 
 
 安装正式版
 
 ```
-bash -c "$(curl -L https://sing-box.vercel.app)" @ install
+bash -c "$(curl -L sing-box.vercel.app)" @ install
 ```
 
 安装预发布版
 
 ```
-bash -c "$(curl -L https://sing-box.vercel.app)" @ install --beta
+bash -c "$(curl -L sing-box.vercel.app)" @ install --beta
 ```
 
 编译安装最新版
 
 ```
-bash -c "$(curl -L https://sing-box.vercel.app)" @ install --go
+bash -c "$(curl -L sing-box.vercel.app)" @ install --go
 ```
 
 卸载
 
 ```
-bash -c "$(curl -L https://sing-box.vercel.app)" @ remove
+bash -c "$(curl -L sing-box.vercel.app)" @ remove
 ```
 
 | 项目 | |
 | :--- | :--- |
 | 程序 | **/usr/local/bin/sing-box** |
 | 配置 | **/usr/local/etc/sing-box/config.json** |
-| geoip | **/usr/local/share/sing-box/geoip.db** |
-| geosite | **/usr/local/share/sing-box/geosite.db** |
+| 工作目录 | **/var/lib/sing-box** |
 | 热载 | `systemctl reload sing-box` |
 | 重启 | `systemctl restart sing-box` |
 | 状态 | `systemctl status sing-box` |
@@ -45,7 +74,7 @@ bash -c "$(curl -L https://sing-box.vercel.app)" @ remove
 1. 下载程序（**linux-amd64**）或 [编译程序](compile_sing-box.md)
 
 ```
-curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v1.5.3/sing-box-1.5.3-linux-amd64.tar.gz && tar -xzf sing-box.tar.gz && cp -f sing-box-*/sing-box . && rm -r sing-box.tar.gz sing-box-* && chown root:root sing-box && chmod +x sing-box && mv -f sing-box /usr/local/bin/
+curl -Lo sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/latest/download/$(curl https://api.github.com/repos/SagerNet/sing-box/releases|grep -E '"name": "sing-box-.*-linux-amd64.tar.gz"'|grep -Pv '(alpha|beta|rc)'|sed -n 's/.*"name": "\(.*\)".*/\1/p'|head -1) && tar -xzf sing-box.tar.gz && cp -f sing-box-*/sing-box . && rm -r sing-box.tar.gz sing-box-* && chown root:root sing-box && chmod +x sing-box && mv -f sing-box /usr/local/bin/
 ```
 
 2. 上传配置、证书和私钥

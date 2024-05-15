@@ -6,8 +6,7 @@
             "listen_port": 443,
             "users": [
                 {
-                    "uuid": "",
-                    "flow": "xtls-rprx-vision"
+                    "uuid": ""
                 }
             ],
             "tls": {
@@ -24,6 +23,10 @@
                         ""
                     ]
                 }
+            },
+            "transport": {
+                "type": "http",
+                "host": [] // 若不写此字段或值留空时，将接受任意值，若设置此字段，需要两端值一致才能连接成功，"host": [""] 不是值留空
             }
         }
     ],

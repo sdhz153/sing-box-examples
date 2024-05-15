@@ -8,20 +8,27 @@
     ],
     "outbounds": [
         {
-            "type": "trojan",
+            "type": "vless",
             "server": "",
             "server_port": 443,
-            "password": "",
+            "uuid": "",
             "tls": {
                 "enabled": true,
                 "server_name": "",
                 "utls": {
                     "enabled": true,
                     "fingerprint": "chrome"
+                },
+                "reality": {
+                    "enabled": true,
+                    "public_key": "",
+                    "short_id": ""
                 }
             },
-            "multiplex": {
-                "enabled": true
+            "packet_encoding": "xudp",
+            "transport": {
+                "type": "http",
+                "host": []
             }
         }
     ]

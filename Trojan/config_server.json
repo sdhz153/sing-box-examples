@@ -13,6 +13,9 @@
                 "enabled": true,
                 "certificate_path": "/root/fullchain.cer",
                 "key_path": "/root/private.key"
+            },
+            "multiplex": {
+                "enabled": true
             }
         }
     ],

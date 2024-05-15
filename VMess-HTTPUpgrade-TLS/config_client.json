@@ -8,10 +8,12 @@
     ],
     "outbounds": [
         {
-            "type": "trojan",
+            "type": "vmess",
             "server": "",
             "server_port": 443,
-            "password": "",
+            "uuid": "",
+            "security": "aes-128-gcm",
+            "alter_id": 0,
             "tls": {
                 "enabled": true,
                 "server_name": "",
@@ -20,8 +22,10 @@
                     "fingerprint": "chrome"
                 }
             },
-            "multiplex": {
-                "enabled": true
+            "packet_encoding": "packetaddr",
+            "transport": {
+                "type": "httpupgrade",
+                "path": ""
             }
         }
     ]

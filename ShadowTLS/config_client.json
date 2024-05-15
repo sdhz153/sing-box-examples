@@ -11,7 +11,10 @@
             "type": "shadowsocks",
             "detour": "shadowtls-out",
             "method": "2022-blake3-aes-128-gcm",
-            "password": ""
+            "password": "",
+            "multiplex": {
+                "enabled": true
+            }
         },
         {
             "type": "shadowtls",
@@ -22,7 +25,11 @@
             "password": "",
             "tls": {
                 "enabled": true,
-                "server_name": ""
+                "server_name": "",
+                "utls": {
+                    "enabled": true,
+                    "fingerprint": "chrome"
+                }
             }
         }
     ]

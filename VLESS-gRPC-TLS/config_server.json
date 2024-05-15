@@ -11,7 +11,7 @@
             ],
             "transport": {
                 "type": "grpc",
-                "service_name": ""
+                "service_name": "" // gRPC 服务名称
             }
         }
     ],
