@@ -7,7 +7,7 @@
         "servers": [
             {
                 "tag": "dns_proxy",
-                "address": "https://1.1.1.1/dns-query",
+                "address": "tcp://1.1.1.1",
                 "address_resolver": "dns_resolver",
                 "strategy": "ipv4_only",
                 "detour": "proxy"
@@ -65,6 +65,7 @@
                 ],
                 "invert": true,
                 "server": "dns_refused",
+                "action": "route-options",
                 "disable_cache": true
             }
         ],
@@ -80,41 +81,42 @@
         "rule_set": [
             {
                 "tag": "geosite-geolocation-!cn",
-                "type": "remote",
+                "type": "local",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
-                "download_detour": "proxy"
+                "path": "geosite-geolocation-!cn.srs"
             },
             {
                 "tag": "geoip-cn",
-                "type": "remote",
+                "type": "local",
                 "format": "binary",
-                "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
-                "download_detour": "proxy"
+                "path": "geoip-cn.srs"
             }
         ],
         "rules": [
             {
+                "inbound": "tun-in",
+                "action": "sniff"
+            },
+            {
                 "protocol": "dns",
-                "outbound": "dns-out"
+                "action": "hijack-dns"
             },
             {
                 "process_name": [
                     "xray.exe",
-                    "hysteria.exe",
-                    "IDMan.exe"
+                    "hysteria.exe"
                 ],
                 "outbound": "direct"
             },
             {
                 "port": 853,
                 "network": "tcp",
-                "outbound": "block"
+                "action": "reject"
             },
             {
                 "port": 443,
                 "network": "udp",
-                "outbound": "block"
+                "action": "reject"
             },
             {
                 "rule_set": "geosite-geolocation-!cn",
@@ -136,14 +138,14 @@
         {
             "type": "tun",
             "tag": "tun-in",
-            "inet4_address": "172.16.0.1/30",
-            "inet6_address": "fd00::1/126",
+            "address": [
+                "172.16.0.1/30",
+                "fd00::1/126"
+            ],
             "mtu": 1492,
             "auto_route": true,
             "strict_route": true,
-            "stack": "system",
-            "sniff": true,
-            "sniff_override_destination": false
+            "stack": "system"
         }
     ],
     "outbounds": [
@@ -156,14 +158,6 @@
         {
             "type": "direct",
             "tag": "direct"
-        },
-        {
-            "type": "block",
-            "tag": "block"
-        },
-        {
-            "type": "dns",
-            "tag": "dns-out"
         }
     ],
     "experimental": {
