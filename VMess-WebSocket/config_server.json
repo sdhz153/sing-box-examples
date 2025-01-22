@@ -19,7 +19,7 @@
             "multiplex": {
                 "enabled": true,
                 "padding": true
-                }
+            }
         }
     ],
     "outbounds": [
