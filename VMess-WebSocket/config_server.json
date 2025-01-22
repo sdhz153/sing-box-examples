@@ -3,7 +3,7 @@
         {
             "type": "vmess",
             "listen": "::",
-            "listen_port": 80,
+            "listen_port": 1980,
             "users": [
                 {
                     "uuid": "",
@@ -16,10 +16,10 @@
                 "max_early_data": 2048,
                 "early_data_header_name": "Sec-WebSocket-Protocol"
             },
-			"multiplex": {
-				"enabled": true,
-				"padding": true
-			}
+            "multiplex": {
+                "enabled": true,
+                "padding": true
+                }
         }
     ],
     "outbounds": [
